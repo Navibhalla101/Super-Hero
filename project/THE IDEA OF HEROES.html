@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SUPERVERSE — A Novel Concept: The Super-Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --ink: #1d1c1d;
+  --ink-2: #131212;
+  --ink-3: #0b0b0b;
+  --cream: #fff7e5;
+  --cream-dim: rgba(255, 247, 229, 0.72);
+  --cream-faint: rgba(255, 247, 229, 0.42);
+  --cream-ghost: rgba(255, 247, 229, 0.14);
+  --tan: #dea773;
+  --tan-deep: #c48a54;
+  --cyan: #34ffff;
+  --navy: #0a2448;
+  --rule: rgba(255, 247, 229, 0.22);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--ink); }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: 'Cormorant', 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.38;
+  overflow-x: hidden;
+  font-feature-settings: "liga" on, "dlig" on;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle film grain */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: var(--grain, 0.28);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1   0 0 0 0 1   0 0 0 0 1   0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+h1,h2,h3,h4,h5 { margin: 0; font-weight: 500; font-family: 'Cormorant', serif; letter-spacing: -0.01em; line-height: 0.94; }
+
+::selection { background: var(--tan); color: var(--ink); }
+
+a { color: inherit; }
+
+.mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 72px;
+  position: relative;
+  z-index: 3;
+}
+@media (max-width: 900px) { .wrap { padding: 0 24px; } }
+
+/* ───── Nav ───── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  padding: 22px 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Cormorant', serif;
+  mix-blend-mode: difference;
+  color: var(--cream);
+}
+.nav .brand {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  color: var(--cream);
+}
+.nav .brand em { font-style: italic; color: var(--tan); font-weight: 400; letter-spacing: 0.02em; }
+.nav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; gap: 44px;
+  align-items: center;
+}
+.nav ul a {
+  font-family: 'Cormorant', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cream);
+  text-decoration: none;
+  position: relative;
+  transition: color .25s;
+}
+.nav ul a:hover { color: var(--tan); }
+.nav ul a.active { color: var(--cyan); }
+.nav ul a.active::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 1px; background: var(--cyan);
+}
+@media (max-width: 900px) {
+  .nav { padding: 16px 24px; }
+  .nav ul { display: none; }
+}
+
+/* ───── Typography scales ───── */
+.display {
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+}
+.mega {
+  font-size: clamp(72px, 13vw, 220px);
+  line-height: 0.86;
+}
+.giant {
+  font-size: clamp(56px, 9vw, 160px);
+  line-height: 0.9;
+}
+.huge {
+  font-size: clamp(40px, 5.5vw, 84px);
+  line-height: 0.98;
+}
+.big {
+  font-size: clamp(28px, 3.5vw, 54px);
+  line-height: 1.04;
+}
+.lede {
+  font-size: clamp(20px, 1.7vw, 28px);
+  line-height: 1.45;
+  max-width: 62ch;
+  color: var(--cream);
+  font-weight: 400;
+}
+.body {
+  font-size: 22px;
+  line-height: 1.52;
+  max-width: 62ch;
+  color: var(--cream);
+  font-weight: 400;
+}
+.body-lg {
+  font-size: clamp(24px, 1.8vw, 32px);
+  line-height: 1.38;
+  max-width: 30ch;
+  font-weight: 400;
+}
+.italic { font-style: italic; color: var(--tan); }
+.tan { color: var(--tan); }
+.cyan { color: var(--cyan); }
+.dim { color: var(--cream-dim); }
+.faint { color: var(--cream-faint); }
+
+/* ───── Hero ───── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 160px 0 100px;
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  min-height: 70vh;
+}
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.hero h1 {
+  font-size: clamp(72px, 10vw, 168px);
+  line-height: 0.88;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+.hero h1 .it { font-style: italic; color: var(--tan); }
+.hero .eyebrow {
+  color: var(--tan);
+  font-size: 22px;
+  font-style: italic;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+.hero .byline {
+  margin-top: 48px;
+  font-size: 20px;
+  color: var(--cream-dim);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.hero .byline::before {
+  content: ''; display: inline-block; width: 56px; height: 1px; background: var(--tan);
+}
+.hero .scroll-cue {
+  margin-top: 80px;
+  font-size: 28px;
+  color: var(--tan);
+  font-style: italic;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+
+/* Hero image panel (placeholder) */
+.placeholder {
+  position: relative;
+  background: var(--ink-2);
+  border: 1px solid var(--cream-ghost);
+  overflow: hidden;
+  color: var(--cream-faint);
+}
+.placeholder::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 0.5px), rgba(255,247,229,0.08) calc(50% - 0.5px), rgba(255,247,229,0.08) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom left, transparent calc(50% - 0.5px), rgba(255,247,229,0.08) calc(50% - 0.5px), rgba(255,247,229,0.08) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+  pointer-events: none;
+}
+.placeholder .tag {
+  position: absolute; top: 16px; left: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  background: rgba(29,28,29,0.85);
+  padding: 6px 10px;
+  border: 1px solid var(--cream-ghost);
+}
+.placeholder .caption {
+  position: absolute; bottom: 16px; left: 16px; right: 16px;
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--cream-dim);
+  z-index: 2;
+}
+
+.hero-figure {
+  aspect-ratio: 3/4;
+  width: 100%;
+  max-width: 620px;
+  margin-left: auto;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(222,167,115,0.18), transparent 60%),
+    linear-gradient(180deg, #2a2420 0%, #1a1614 100%);
+  border: 1px solid var(--cream-ghost);
+  position: relative;
+  overflow: hidden;
+}
+.hero-figure .frame-label {
+  position: absolute; top: 16px; right: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--tan);
+}
+.hero-figure .frame-corner {
+  position: absolute;
+  width: 40px; height: 40px;
+  border: 1px solid var(--tan);
+}
+.hero-figure .frame-corner.tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+.hero-figure .frame-corner.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; }
+.hero-figure .frame-corner.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; }
+.hero-figure .frame-corner.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; }
+.hero-figure .silhouette {
+  position: absolute; inset: 12%;
+  background:
+    radial-gradient(40% 30% at 50% 22%, rgba(255,247,229,0.55), transparent 65%),
+    radial-gradient(60% 50% at 50% 60%, rgba(222,167,115,0.28), transparent 70%);
+  filter: blur(6px);
+}
+.hero-figure .glyph {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  font-size: 360px;
+  line-height: 1;
+  color: var(--cream);
+  opacity: 0.06;
+  letter-spacing: -0.05em;
+}
+
+/* ───── Section shell ───── */
+section {
+  position: relative;
+  scroll-margin-top: 100px;
+  padding: 140px 0;
+  border-top: 1px solid var(--rule);
+}
+
+section .section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 56px;
+  color: var(--cream-faint);
+}
+section .section-kicker .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+}
+section .section-kicker .name {
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--tan);
+}
+
+/* ───── Sections ───── */
+
+/* World section */
+.world {
+  background: linear-gradient(180deg, var(--ink) 0%, #18171a 100%);
+}
+.world-inner {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 96px;
+  align-items: center;
+}
+@media (max-width: 900px) { .world-inner { grid-template-columns: 1fr; gap: 48px; } }
+
+.world h2 {
+  font-size: clamp(56px, 8vw, 128px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.world h2 em { color: var(--tan); font-weight: 400; }
+.world .manifesto p { margin-bottom: 22px; }
+.world-fig {
+  aspect-ratio: 4/5;
+  max-width: 520px;
+  margin-left: auto;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(52,255,255,0.55) 0%, var(--ink) 100%);
+  border: 1px solid var(--cream-ghost);
+  overflow: hidden;
+}
+.world-fig .inner {
+  position: absolute; inset: 14%;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,247,229,0.07) 0 2px, transparent 2px 18px),
+    radial-gradient(ellipse at 50% 30%, rgba(255,247,229,0.5), transparent 65%);
+}
+.world-fig .frame-corner { position:absolute; width:32px; height:32px; border:1px solid var(--cyan); }
+.world-fig .tl { top:12px; left:12px; border-right:0; border-bottom:0; }
+.world-fig .tr { top:12px; right:12px; border-left:0; border-bottom:0; }
+.world-fig .bl { bottom:12px; left:12px; border-right:0; border-top:0; }
+.world-fig .br { bottom:12px; right:12px; border-left:0; border-top:0; }
+.world-fig .cap {
+  position: absolute; bottom: 24px; left: 24px; right: 24px;
+  color: var(--cream);
+  font-style: italic;
+  font-size: 16px;
+  z-index: 2;
+}
+
+/* Catalog / heroes */
+.catalog .big-word {
+  font-size: clamp(140px, 24vw, 400px);
+  color: var(--cyan);
+  font-weight: 500;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  margin: 0 0 64px;
+  text-align: left;
+}
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  align-items: end;
+}
+@media (max-width: 1100px) { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .catalog-grid { grid-template-columns: 1fr; } }
+
+.hero-card {
+  position: relative;
+  cursor: pointer;
+}
+.hero-card .index {
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  font-size: clamp(100px, 14vw, 220px);
+  line-height: 0.8;
+  color: var(--cream);
+  position: absolute;
+  left: -10px; top: 40px;
+  z-index: 3;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  transition: color .4s, transform .4s;
+}
+.hero-card:hover .index { color: var(--tan); transform: translate(-6px, -6px); }
+.hero-card .portrait {
+  aspect-ratio: 3/4.4;
+  background:
+    linear-gradient(180deg, #3a2d25 0%, #1a1410 100%);
+  border: 1px solid var(--cream-ghost);
+  position: relative;
+  overflow: hidden;
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.hero-card:hover .portrait { transform: translateY(-8px); }
+.hero-card .portrait::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(50% 40% at 50% 30%, rgba(255,247,229,0.5), transparent 65%),
+    radial-gradient(70% 50% at 50% 70%, rgba(222,167,115,0.35), transparent 70%);
+  filter: blur(8px);
+}
+.hero-card .portrait .scan {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,247,229,0.04) 0 1.5px, transparent 1.5px 6px);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-card .meta {
+  margin-top: 24px;
+}
+.hero-card .name {
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--tan);
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.hero-card .tag-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+}
+
+/* Pullquote / passage */
+.passage {
+  padding: 140px 0;
+}
+.passage-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 96px;
+  align-items: start;
+}
+@media (max-width: 900px) { .passage-inner { grid-template-columns: 1fr; gap: 48px; } }
+
+.passage-title {
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  position: sticky;
+  top: 120px;
+}
+.passage-title em { color: var(--tan); font-weight: 400; }
+
+.passage-body p { margin: 0 0 24px; max-width: 52ch; }
+.passage-body p:first-child::first-letter {
+  font-family: 'Cormorant', serif;
+  font-weight: 500;
+  float: left;
+  font-size: 5.2em;
+  line-height: 0.82;
+  padding-right: 12px;
+  padding-top: 6px;
+  color: var(--tan);
+  font-style: italic;
+}
+
+/* Iconography grid */
+.symbols {
+  background: var(--ink-2);
+}
+.symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+@media (max-width: 900px) { .symbol-grid { grid-template-columns: repeat(2, 1fr); } }
+.symbol-tile {
+  aspect-ratio: 1;
+  background: var(--ink);
+  border: 1px solid var(--cream-ghost);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .3s;
+}
+.symbol-tile:hover { border-color: var(--tan); }
+.symbol-tile svg { width: 50%; height: 50%; color: var(--cream); transition: color .3s, transform .5s; }
+.symbol-tile:hover svg { color: var(--tan); transform: rotate(6deg) scale(1.06); }
+.symbol-tile .label {
+  position: absolute; bottom: 10px; left: 12px; right: 12px;
+  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--cream-faint);
+}
+.symbol-tile .meaning {
+  position: absolute; top: 12px; left: 12px; right: 12px;
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  color: var(--tan);
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.symbol-tile:hover .meaning { opacity: 1; }
+
+/* Timeline / fragments */
+.fragments .frag-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px 48px;
+  margin-top: 56px;
+}
+@media (max-width: 900px) { .fragments .frag-grid { grid-template-columns: 1fr; } }
+.frag {
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+}
+.frag .yr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--tan);
+  letter-spacing: 0.2em;
+  margin-bottom: 12px;
+}
+.frag h4 {
+  font-family: 'Cormorant', serif;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 500;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.frag p { font-size: 18px; color: var(--cream-dim); line-height: 1.5; }
+
+/* World impact full-bleed quote */
+.impact {
+  background: var(--navy);
+  padding: 180px 0;
+  color: var(--cream);
+  border-top: 0;
+  overflow: hidden;
+  position: relative;
+}
+.impact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 20% 40%, rgba(52,255,255,0.12), transparent 60%),
+    radial-gradient(40% 40% at 90% 80%, rgba(222,167,115,0.12), transparent 60%);
+  pointer-events: none;
+}
+.impact .quote {
+  font-family: 'Cormorant', serif;
+  font-weight: 400;
+  font-size: clamp(40px, 5.5vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  max-width: 22ch;
+}
+.impact .quote em { color: var(--tan); font-style: italic; }
+.impact .attr {
+  margin-top: 56px;
+  font-style: italic;
+  color: var(--cream-dim);
+  font-size: 20px;
+}
+
+/* Author section */
+.author {
+  padding: 140px 0;
+}
+.author-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+@media (max-width: 900px) { .author-inner { grid-template-columns: 1fr; } }
+
+.author-photo {
+  aspect-ratio: 3/4;
+  max-width: 460px;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(222,167,115,0.28) 0%, var(--ink-2) 100%);
+  border: 1px solid var(--cream-ghost);
+  overflow: hidden;
+}
+.author-photo .sil {
+  position: absolute; inset: 18% 20% 8% 20%;
+  background: radial-gradient(50% 40% at 50% 30%, var(--cream) 0%, transparent 60%);
+  opacity: 0.2;
+  filter: blur(4px);
+}
+
+/* Footer */
+.footer {
+  padding: 80px 0 60px;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.footer .back {
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+  font-size: clamp(36px, 5vw, 72px);
+  color: var(--tan);
+  text-decoration: underline;
+  text-underline-offset: 12px;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+  display: inline-block;
+}
+.footer .colophon {
+  margin-top: 80px;
+  display: flex; justify-content: space-between;
+  color: var(--cream-faint);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s ease-out, transform 1s ease-out; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Side index */
+.side-index {
+  position: fixed;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  text-align: right;
+}
+.side-index a {
+  text-decoration: none; color: inherit;
+  display: inline-flex; justify-content: flex-end; align-items: center; gap: 12px;
+  transition: color .2s;
+}
+.side-index a::after {
+  content: ''; width: 20px; height: 1px; background: currentColor; transition: width .25s, background .25s;
+}
+.side-index a:hover, .side-index a.active { color: var(--tan); }
+.side-index a.active::after { width: 40px; background: var(--cyan); }
+@media (max-width: 1200px) { .side-index { display: none; } }
+
+/* Tweaks */
+.tweaks {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 50;
+  width: 280px;
+  background: var(--ink-3);
+  border: 1px solid var(--tan);
+  color: var(--cream);
+  padding: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  display: none;
+}
+.tweaks.on { display: block; }
+.tweaks h4 { font-family: 'Cormorant', serif; font-style: italic; font-size: 22px; letter-spacing: 0.02em; margin-bottom: 16px; color: var(--tan); text-transform: none; font-weight: 500; }
+.tweak-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--cream-ghost); }
+.tweak-row:first-of-type { border-top: 0; }
+.tweak-row > span:first-child { color: var(--cream-faint); letter-spacing: 0.18em; text-transform: uppercase; font-size: 10px; }
+.swatches { display: flex; gap: 6px; }
+.swatch { width: 22px; height: 22px; border: 1px solid var(--cream-ghost); cursor: pointer; border-radius: 0; }
+.swatch.on { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.seg { display: inline-flex; border: 1px solid var(--cream-ghost); overflow: hidden; }
+.seg button { background: transparent; color: var(--cream); border: 0; padding: 4px 10px; font-family: inherit; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; }
+.seg button.on { background: var(--tan); color: var(--ink); }
+.tweaks input[type=range] { width: 100%; accent-color: var(--tan); }
+
+</style>
+
+<script type="application/json" id="ext-resource-dependency-inter">
+{"rel":"stylesheet","type":"text/css","href":"https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"}
+</script>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef, useMemo } = React;
+
+// ===== Content =====
+const HEROES = [
+  {
+    idx: "01",
+    name: "Solara",
+    tagline: "The Dawn-Keeper",
+    color: "#dea773",
+    abstract: "Carries the first light of morning in her hands; wakes cities that have forgotten the sun.",
+  },
+  {
+    idx: "02",
+    name: "Lasso Lass",
+    tagline: "The Rope-Walker",
+    color: "#fff7e5",
+    abstract: "Pulls the fallen back from the edge of where they fell — literal and otherwise.",
+  },
+  {
+    idx: "03",
+    name: "Toa Torch",
+    tagline: "The Warm Flame",
+    color: "#c48a54",
+    abstract: "Strength without scorching. Warmth you can stand next to without burning.",
+  },
+  {
+    idx: "04",
+    name: "The Repeater",
+    tagline: "Courage, Again",
+    color: "#34ffff",
+    abstract: "The ordinary person who keeps showing up, every single time, until showing up is heroic.",
+  },
+];
+
+const SYMBOLS = [
+  { id: "S-01", name: "Flame",       meaning: "warmth, not harm",     svg: <path d="M50 10 C 58 30, 74 36, 74 58 C 74 78, 62 90, 50 90 C 38 90, 26 78, 26 58 C 26 36, 42 30, 50 10 Z M50 50 C 52 60, 60 62, 60 72 C 60 80, 56 84, 50 84 C 44 84, 40 80, 40 72 C 40 62, 48 60, 50 50 Z" fill="currentColor"/> },
+  { id: "S-02", name: "Circle",      meaning: "the group, the whole", svg: <g fill="none" stroke="currentColor" strokeWidth="3"><circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="20"/></g> },
+  { id: "S-03", name: "Sun",         meaning: "a promise kept",       svg: <g fill="currentColor"><circle cx="50" cy="50" r="16"/>{[...Array(8)].map((_,i)=>(<rect key={i} x="48" y="18" width="4" height="14" transform={`rotate(${i*45} 50 50)`} />))}</g> },
+  { id: "S-04", name: "Hand",        meaning: "showing up",           svg: <path d="M35 30 L35 60 L30 60 L30 78 C 30 88, 38 92, 50 92 C 68 92, 72 82, 72 66 L72 40 C 72 34, 65 34, 65 40 L65 56 M65 40 L65 32 C 65 26, 58 26, 58 32 L58 56 M58 40 L58 28 C 58 22, 51 22, 51 28 L51 56 M51 40 L51 32 C 51 26, 44 26, 44 32 L44 56" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"/> },
+  { id: "S-05", name: "Knot",        meaning: "can't be broken alone",svg: <path d="M30 30 C 70 30, 70 70, 30 70 C 70 70, 70 30, 30 30 Z M70 30 C 30 30, 30 70, 70 70 C 30 70, 30 30, 70 30 Z" fill="none" stroke="currentColor" strokeWidth="3"/> },
+  { id: "S-06", name: "Mountain",    meaning: "stubborn good",        svg: <path d="M10 80 L36 38 L52 62 L66 42 L90 80 Z" fill="currentColor"/> },
+  { id: "S-07", name: "Open Door",   meaning: "welcome",              svg: <g fill="none" stroke="currentColor" strokeWidth="3"><rect x="28" y="18" width="44" height="64"/><path d="M28 18 L14 34 L14 92 L28 82 Z" fill="currentColor"/><circle cx="22" cy="60" r="2" fill="currentColor" stroke="none"/></g> },
+  { id: "S-08", name: "Seed",        meaning: "something will grow",  svg: <g fill="currentColor"><path d="M50 18 C 30 40, 30 70, 50 90 C 70 70, 70 40, 50 18 Z"/><circle cx="50" cy="62" r="4" fill="#1d1c1d"/></g> },
+];
+
+const FRAGMENTS = [
+  { yr: "AGE 06", title: "The first drawing",      body: "A man in a red cape on lined notebook paper. Mom put it on the fridge. That was the whole origin story." },
+  { yr: "AGE 09", title: "Library afternoons",     body: "Greek myth, Norse myth, comic longboxes from the free bin. Everything was the same story, told differently, and that felt like a secret." },
+  { yr: "AGE 11", title: "First costume",          body: "Bedsheet. Masking tape. A logo I cannot now remember drawing. Ran around the yard for an hour and a half." },
+  { yr: "AGE 13", title: "First full character sheet", body: "Name, powers, weakness, hometown, a vow they made to themselves. I read it out loud to my dad. He took notes." },
+  { yr: "AGE 15", title: "The Novel Concept",      body: "I wrote the pitch you're reading. I realized heroes aren't discovered — they are proposed by somebody, and then believed." },
+  { yr: "AGE 16", title: "This site",              body: "I decided to stop keeping the superverse in notebooks and put it somewhere it could find its own readers." },
+];
+
+// ===== Components =====
+
+function useScrollReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  });
+}
+
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) setActive(e.target.id);
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, [ids.join(',')]);
+  return active;
+}
+
+function Nav({ active }) {
+  const items = [
+    { id: "world",     label: "The World" },
+    { id: "heroes",    label: "Super-Heros" },
+    { id: "lore",      label: "Lore" },
+    { id: "impact",    label: "World-Impact" },
+  ];
+  return (
+    <nav className="nav">
+      <div className="brand">SUPER<em>verse</em></div>
+      <ul>
+        {items.map(it => (
+          <li key={it.id}>
+            <a href={`#${it.id}`} className={active === it.id ? 'active' : ''}>{it.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+function SideIndex({ active }) {
+  const items = [
+    { id: "intro",   label: "00 / Opening" },
+    { id: "world",   label: "01 / The World" },
+    { id: "pitch",   label: "02 / A Novel Concept" },
+    { id: "heroes",  label: "03 / Catalog" },
+    { id: "lore",    label: "04 / Lore" },
+    { id: "symbols", label: "05 / Iconography" },
+    { id: "impact",  label: "06 / World-Impact" },
+    { id: "author",  label: "07 / Impetus" },
+  ];
+  return (
+    <div className="side-index">
+      {items.map(it => (
+        <a key={it.id} href={`#${it.id}`} className={active === it.id ? 'active' : ''}>{it.label}</a>
+      ))}
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <section id="intro" className="hero" style={{ borderTop: 0 }}>
+      <div className="wrap">
+        <div className="hero-grid">
+          <div className="reveal">
+            <div className="eyebrow">An essay, a catalog, a proposal —</div>
+            <h1 className="display">
+              A Novel<br/>
+              <span className="it">Concept:</span><br/>
+              The Super-Hero.
+            </h1>
+            <div className="byline">Theo Tsai &nbsp;·&nbsp; Inventor / Engineer — Based in Brooklyn &nbsp;·&nbsp; Age 16</div>
+            <a href="#world" className="scroll-cue">Keep Exploring  ↓</a>
+          </div>
+          <div className="reveal">
+            <div className="hero-figure">
+              <div className="silhouette" />
+              <div className="glyph">S</div>
+              <div className="frame-corner tl" />
+              <div className="frame-corner tr" />
+              <div className="frame-corner bl" />
+              <div className="frame-corner br" />
+              <div className="frame-label">FIG. 001 · THE FIRST HERO</div>
+              <div style={{
+                position:'absolute', bottom:18, left:20, right:20,
+                fontStyle:'italic', fontSize:16, color:'var(--cream-dim)'
+              }}>
+                Placeholder portrait. Lorem ipsum dolor sit, amet consectetur adipiscing elit — swap for illustrated plate.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function World() {
+  return (
+    <section id="world" className="world">
+      <div className="wrap">
+        <div className="section-kicker">
+          <span className="num">SEC / 01</span>
+          <span className="name">The World Before Super-Heroes</span>
+        </div>
+        <div className="world-inner">
+          <div className="manifesto reveal">
+            <h2>
+              I've always wondered what a world<br/>
+              looks like when <em>no one</em> is coming<br/>
+              to save us.
+            </h2>
+            <div style={{ marginTop: 56, maxWidth: '54ch' }}>
+              <p className="body">No capes. No symbols. No one above us.</p>
+              <p className="body">So we turned to each other. Built cities that reflected that choice — repeating, identical, stable. No one stands apart. No one stands above.</p>
+              <p className="body">We rejected the idea of the exceptional.</p>
+              <p className="body italic" style={{ color: 'var(--tan)', fontSize: 28, fontStyle: 'italic', marginTop: 32 }}>
+                But I can't help asking — if no one ever believed in a hero... what would it take to become one?
+              </p>
+            </div>
+          </div>
+          <div className="reveal">
+            <div className="world-fig">
+              <div className="inner" />
+              <div className="frame-corner tl" />
+              <div className="frame-corner tr" />
+              <div className="frame-corner bl" />
+              <div className="frame-corner br" />
+              <div className="cap">Fig. 002 — A repeating city, dreamed without exceptions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Pitch() {
+  return (
+    <section id="pitch" className="passage">
+      <div className="wrap">
+        <div className="section-kicker">
+          <span className="num">SEC / 02</span>
+          <span className="name">What Even Is a Super-Hero?</span>
+        </div>
+        <div className="passage-inner">
+          <h2 className="passage-title reveal">
+            Throughout the last ninety years, we've reveled in <em>science fiction</em> and ancient astronauts portraying unfathomable gods among us.
+          </h2>
+          <div className="passage-body reveal">
+            <p className="body">What if they were just people trying to do the right thing? I think that's the part we keep skipping. We keep drawing the cape first and the person second, when the person is the whole point.</p>
+            <p className="body">A super-hero is a proposal, not a discovery. Somebody, somewhere, sat down and said <em className="italic">here is what a good person could be if we took off the ceiling.</em> And then enough of us believed it that the idea became real enough to imitate.</p>
+            <p className="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            <p className="body italic" style={{ fontSize: 30, color: 'var(--tan)', maxWidth: '28ch' }}>
+              The cape is a side-effect. The promise is the invention.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Catalog() {
+  return (
+    <section id="heroes" className="catalog">
+      <div className="wrap">
+        <div className="section-kicker">
+          <span className="num">SEC / 03</span>
+          <span className="name">The Catalog</span>
+        </div>
+        <h2 className="big-word reveal">CATALOG</h2>
+        <div className="catalog-grid">
+          {HEROES.map((h, i) => (
+            <div className="hero-card reveal" key={h.idx} style={{ transitionDelay: `${i * 80}ms` }}>
+              <div className="index" style={{ color: h.color }}>{h.idx}</div>
+              <div className="portrait">
+                <div className="scan" />
+              </div>
+              <div className="meta">
+                <div className="name">{h.name}</div>
+                <div className="tag-line">{h.tagline}</div>
+                <p style={{ marginTop: 14, fontSize: 18, lineHeight: 1.45, color: 'var(--cream-dim)', maxWidth: '28ch' }}>
+                  {h.abstract}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Lore() {
+  return (
+    <section id="lore" className="passage">
+      <div className="wrap">
+        <div className="section-kicker">
+          <span className="num">SEC / 04</span>
+          <span className="name">Fragments — how this world was built</span>
+        </div>
+        <div className="passage-inner">
+          <h2 className="passage-title reveal">
+            Every culture had legends. This is just <em>the first time</em> we define one.
+          </h2>
+          <div className="passage-body reveal">
+            <p className="body">Before super-heroes existed, people found inspiration in mythology, history, and real-world acts of courage. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</p>
+            <p className="body">I read Ovid and then I read Action Comics #1 and I could not tell you where one ended and the other began. The character names were different. The need was exactly the same.</p>
+            <p className="body">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          </div>
+        </div>
+        <div className="fragments">
+          <div className="frag-grid">
+            {FRAGMENTS.map((f, i) => (
+              <div className="frag reveal" key={f.yr} style={{ transitionDelay: `${i * 60}ms` }}>
+                <div className="yr">{f.yr}</div>
+                <h4>{f.title}</h4>
+                <p>{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Symbols() {
+  return (
+    <section id="symbols" className="symbols">
+      <div className="wrap">
+        <div className="section-kicker">
+          <span className="num">SEC / 05</span>
+          <span className="name">Iconography — what the costumes <i style={{fontStyle:'italic',color:'var(--tan)'}}>mean</i></span>
+        </div>
+        <div className="passage-inner">
+          <h2 className="passage-title reveal">
+            The bright warm colors, the wacky gadgets, and accentuated armor are <em>not</em> flashiness.
+          </h2>
+          <div className="passage-body reveal">
+            <p className="body">There are deeper meanings within why a hero puts on a costume in the first place. It is not for them to be noticed — it is for them to spread a message of positivity, hope, independence, protection, or purely represent the values of a community, a region, an object.</p>
+            <p className="body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p className="body italic" style={{ fontStyle: 'italic', color: 'var(--tan)', fontSize: 24 }}>
+              A symbol is a small contract between a hero and a stranger who has never met them.
+            </p>
+          </div>
+        </div>
+
+        <div className="symbol-grid">
+          {SYMBOLS.map((s, i) => (
+            <div className="symbol-tile reveal" key={s.id} style={{ transitionDelay: `${i * 40}ms` }}>
+              <div className="meaning">{s.meaning}</div>
+              <svg viewBox="0 0 100 100">{s.svg}</svg>
+              <div className="label"><span>{s.id}</span><span>{s.name}</span></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Impact() {
+  return (
+    <section id="impact" className="impact">
+      <div className="wrap">
+        <div className="section-kicker" style={{ color: 'var(--cream-faint)' }}>
+          <span className="num">SEC / 06</span>
+          <span className="name">World-Impact</span>
+        </div>
+        <div className="reveal">
+          <h2 className="quote">
+            Maybe a character's design reminds you of their strength, so you commit to a rigorous journey.<br/><br/>
+            Maybe another reminds you of their powers being used to save animals, so you <em>volunteer at the shelter.</em>
+          </h2>
+          <div className="attr">It is the small nuances of a fictional character that can drive real action.</div>
+        </div>
+
+        <div style={{ marginTop: 100, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 48 }} className="reveal">
+          {[
+            { n: "01", t: "Firefighters",   b: "The hero who runs toward — not because they're unafraid, but because being afraid is beside the point." },
+            { n: "02", t: "Your mother",    b: "Stubborn good, applied daily. Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+            { n: "03", t: "A stranger",     b: "The one who helped you up the one time you really, truly needed it. You don't remember their face." },
+          ].map(c => (
+            <div key={c.n}>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.22em', color: 'var(--cyan)', marginBottom: 18 }}>REAL / {c.n}</div>
+              <h3 style={{ fontFamily: 'Cormorant', fontWeight: 500, fontSize: 40, fontStyle: 'italic', color: 'var(--cream)', marginBottom: 14 }}>{c.t}</h3>
+              <p style={{ fontSize: 19, lineHeight: 1.5, color: 'var(--cream-dim)', maxWidth: '32ch' }}>{c.b}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Author() {
+  return (
+    <section id="author" className="author">
+      <div className="wrap">
+        <div className="section-kicker">
+          <span className="num">SEC / 07</span>
+          <span className="name">My Impetus</span>
+        </div>
+        <div className="author-inner">
+          <div className="reveal">
+            <div className="author-photo">
+              <div className="sil" />
+              <div className="frame-corner tl" style={{ borderColor: 'var(--tan)' }} />
+              <div className="frame-corner tr" style={{ borderColor: 'var(--tan)' }} />
+              <div className="frame-corner bl" style={{ borderColor: 'var(--tan)' }} />
+              <div className="frame-corner br" style={{ borderColor: 'var(--tan)' }} />
+              <div style={{
+                position:'absolute', bottom:18, left:20, right:20,
+                fontStyle:'italic', fontSize:15, color:'var(--cream-dim)'
+              }}>
+                Placeholder — self portrait goes here.
+              </div>
+            </div>
+          </div>
+          <div className="reveal">
+            <h2 className="display" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}>
+              I learned how to write kind characters because <span style={{ color: 'var(--tan)', fontStyle: 'italic' }}>I grew up with kind parents.</span>
+            </h2>
+            <div style={{ marginTop: 40 }}>
+              <p className="body">That's really the simplest way to say it. Before I ever sat down and tried to come up with larger-than-life people, I already knew what made someone worth admiring. It wasn't power. It wasn't fearlessness. It wasn't even brilliance.</p>
+              <p className="body"><em style={{fontStyle:'italic', color:'var(--tan)'}}>It was kindness.</em> My mom and dad gave me that idea early, not by explaining it like a lesson, but by living it every day in ways that were easy to miss if you weren't paying attention.</p>
+              <p className="body">So when I started writing, and there was no real tradition for the kinds of heroic figures I wanted to create, I didn't invent them out of nowhere. I built them from what I already knew. I gave them impossible abilities, yes — but the part that actually mattered came from my parents.</p>
+              <p className="body">Someone with that much power shouldn't be defined by strength alone. They have to be strong, <em style={{fontStyle:'italic', color:'var(--tan)'}}>but to be gentle.</em></p>
+              <p className="body" style={{ fontSize: 26, fontStyle: 'italic', color: 'var(--cream)' }}>
+                Every kind character I ever wrote was me trying to put my mother and father into fiction, then making them larger so the whole world could see what I had already seen.
+              </p>
+              <p className="body" style={{ fontSize: 26, fontStyle: 'italic', color: 'var(--tan)' }}>
+                If we understood that — imagine how high we can get.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="wrap">
+        <a className="back" href="#intro">Jump Back to Top ↑</a>
+        <div className="colophon">
+          <span>SUPERVERSE · MMXXVI</span>
+          <span>Theo Tsai · Brooklyn, NY</span>
+          <span>Set in Cormorant · Written by hand</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ===== Tweaks =====
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#34ffff",
+  "grain": 17,
+  "contrast": "warm"
+}/*EDITMODE-END*/;
+
+function Tweaks({ open, values, onChange }) {
+  const accents = [
+    { v: "#dea773", label: "tan" },
+    { v: "#34ffff", label: "cyan" },
+    { v: "#ff6a4a", label: "ember" },
+    { v: "#e8d56b", label: "ochre" },
+  ];
+  const contrasts = [
+    { v: "warm",  label: "WARM" },
+    { v: "cool",  label: "COOL" },
+    { v: "punch", label: "PUNCH" },
+  ];
+  return (
+    <div className={'tweaks' + (open ? ' on' : '')}>
+      <h4>Tweaks</h4>
+      <div className="tweak-row">
+        <span>Accent</span>
+        <div className="swatches">
+          {accents.map(a => (
+            <div key={a.v} className={'swatch ' + (values.accent === a.v ? 'on' : '')}
+              style={{ background: a.v }}
+              onClick={() => onChange({ accent: a.v })}
+              title={a.label}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="tweak-row">
+        <span>Mood</span>
+        <div className="seg">
+          {contrasts.map(c => (
+            <button key={c.v} className={values.contrast === c.v ? 'on' : ''}
+              onClick={() => onChange({ contrast: c.v })}>{c.label}</button>
+          ))}
+        </div>
+      </div>
+      <div className="tweak-row" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+        <span style={{ marginBottom: 6 }}>Grain · {values.grain}%</span>
+        <input type="range" min="0" max="60" step="1" value={values.grain}
+          onChange={e => onChange({ grain: parseInt(e.target.value, 10) })} />
+      </div>
+    </div>
+  );
+}
+
+// ===== App =====
+function App() {
+  const [values, setValues] = useState(TWEAK_DEFAULTS);
+  const [tweakOpen, setTweakOpen] = useState(false);
+  const active = useActiveSection(["intro","world","pitch","heroes","lore","symbols","impact","author"]);
+
+  useScrollReveal();
+
+  // Apply tweaks live
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--tan', values.accent);
+    root.style.setProperty('--grain', String((values.grain || 0) / 100));
+
+    const moods = {
+      warm:  { '--ink': '#1d1c1d', '--cream': '#fff7e5', '--navy': '#0a2448' },
+      cool:  { '--ink': '#13161a', '--cream': '#e8ecf2', '--navy': '#0a1f3a' },
+      punch: { '--ink': '#0a0a0a', '--cream': '#ffffff', '--navy': '#140a2e' },
+    };
+    const mood = moods[values.contrast] || moods.warm;
+    Object.entries(mood).forEach(([k,v]) => root.style.setProperty(k, v));
+  }, [values]);
+
+  // Host handshake
+  useEffect(() => {
+    const handler = (e) => {
+      const d = e.data || {};
+      if (d.type === '__activate_edit_mode')   setTweakOpen(true);
+      if (d.type === '__deactivate_edit_mode') setTweakOpen(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const onChange = (patch) => {
+    const next = { ...values, ...patch };
+    setValues(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*');
+  };
+
+  return (
+    <React.Fragment>
+      <Nav active={active} />
+      <SideIndex active={active} />
+      <Hero />
+      <World />
+      <Pitch />
+      <Catalog />
+      <Lore />
+      <Symbols />
+      <Impact />
+      <Author />
+      <Footer />
+      <Tweaks open={tweakOpen} values={values} onChange={onChange} />
+    </React.Fragment>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
