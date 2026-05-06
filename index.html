@@ -250,6 +250,7 @@
       inset: 18px;
       border: 1px solid rgba(255,255,255,0.22);
       pointer-events: none;
+      z-index: 2;
     }
 
     .placeholder-label {
@@ -268,86 +269,44 @@
       text-transform: uppercase;
     }
 
-    .figure {
+    .character-image {
       position: absolute;
-      left: 50%;
-      bottom: 0;
-      width: 44%;
-      height: 82%;
-      transform: translateX(-50%);
-      filter: drop-shadow(0 24px 26px rgba(0,0,0,0.38));
-    }
-
-    .figure__head {
-      position: absolute;
-      left: 50%;
-      top: 3%;
-      width: 31%;
-      aspect-ratio: 1;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: var(--cream);
-      box-shadow: inset -12px -8px 0 rgba(0,0,0,0.12);
-    }
-
-    .figure__body {
-      position: absolute;
-      left: 50%;
-      top: 27%;
-      width: 72%;
-      height: 56%;
-      transform: translateX(-50%);
-      border-radius: 46% 46% 12% 12%;
-      background: linear-gradient(145deg, var(--suit-light), var(--suit-dark));
-    }
-
-    .figure__body::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: 18%;
+      inset: 0;
+      width: 100%;
       height: 100%;
-      transform: translateX(-50%);
-      background: rgba(255,248,232,0.38);
-      mix-blend-mode: screen;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      z-index: 1;
     }
 
-    .figure__arm,
-    .figure__leg {
+    .image-empty-state {
       position: absolute;
-      background: linear-gradient(145deg, var(--suit-light), var(--suit-dark));
-      border-radius: 999px;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      color: rgba(255,248,232,0.82);
+      background:
+        linear-gradient(145deg, rgba(255,248,232,0.08), rgba(35,217,232,0.08)),
+        var(--card-bg);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      line-height: 1.5;
+      text-transform: uppercase;
+      z-index: 1;
     }
 
-    .figure__arm.left {
-      width: 18%;
-      height: 45%;
-      left: 5%;
-      top: 32%;
-      transform: rotate(9deg);
-    }
-
-    .figure__arm.right {
-      width: 18%;
-      height: 45%;
-      right: 5%;
-      top: 32%;
-      transform: rotate(-9deg);
-    }
-
-    .figure__leg.left {
-      width: 22%;
-      height: 38%;
-      left: 27%;
-      bottom: 0;
-    }
-
-    .figure__leg.right {
-      width: 22%;
-      height: 38%;
-      right: 27%;
-      bottom: 0;
+    .image-empty-state code {
+      display: block;
+      margin-top: 10px;
+      color: var(--cyan);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      white-space: normal;
     }
 
     .costume-node {
@@ -573,11 +532,8 @@
       position: absolute;
       inset: 18px;
       border: 1px solid rgba(255,255,255,0.24);
-    }
-
-    .modal-portrait .figure {
-      width: 48%;
-      height: 82%;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .modal-portrait .costume-node::after {
@@ -726,7 +682,7 @@
         <div class="kicker">Character design archive — six concepts</div>
         <h1 class="catalog-title catalog-title--compact">Super-Hero <span class="cyan">Concepts</span></h1>
       </div>
-      <p>Click a figure panel to open that character’s file. Costume notes appear as hoverable nodes only inside the expanded character window.</p>
+      <p>Click an image panel to open that character’s file. Paste each character image link into the image field in the script. Costume notes appear as hoverable nodes only inside the expanded character window.</p>
     </section>
 
     <section class="catalog-grid" id="catalogGrid" aria-label="Superhero character catalog"></section>
@@ -745,6 +701,8 @@
         name: "Ghost Radar",
         role: "Urban rescuer / Street-Level tactician",
         short: "A dark brooding hero who turns city infrastructure into a living rescue network.",
+        image: "PASTE_IMAGE_LINK_HERE",
+        imageAlt: "Portrait art of Ghost Radar",
         origin: "Olga Alekseev was born with exceptional perceptual senses and incredibly sensitive hearing. She ran a family circus in Moscow, Russia, but the circus was constantly looted by the mafia. Then a mafia-caused blackout accident that gave her powers and killed her family. Fueled by revenge, she took on the persona of the Ghost Radar, using her keen senses to locate crimes around the city and fight criminals with her excellent martial arts training. Over time as she continues to wage war against crime, she learns that vengeance is not the answer, but to instead be a symbol of protection and hope for the city.",
         powers: ["Superhuman Senses", "Enhanced Hearing", "Enhanced Touch & Smell", "Can detect electrical signals and noise", "Hand-to-Hand Combat", "Escrima Stick Combat",],
         process: "Unlike most of my heroes, I wanted a character fueled with a different motivation initially. Someone who begins their journey with a sinister mission, but learns the hero’s journey on their own. This could inspire readers that brutality, violence, and authoritative fear is not an effective goal to achieving true justice in the world.",
@@ -762,6 +720,8 @@
         name: "The Switch",
         role: "Night patrol illusionist",
         short: "A quiet hero who weaponizes glare, shadow, and misdirection.",
+        image: "PASTE_IMAGE_LINK_HERE",
+        imageAlt: "Portrait art of The Switch",
         origin: "Erik grew up in Antarctica and his father was a glaciologist, but suddenly his father goes missing during an expedition. Feeling alone and full of despair he went far into the glaciers and the artic snow and deep inside the ice, he discovered something impossible. A massive, pulsing crystal formation older than humanity itself, a fragment of something that fell from space millions of years ago. Erik goes to touch the crystal, and the crystal fused into him, restructuring his body at the molecular level. Light bends around him, through him, because of him. From then, he decides to help others as a way of finding his father, in the hope he can finally save his father.",
         powers: ["Photokinesis - Bending light", "Refraction of Light through Crystalline Shapeshifting", "Flash-disorients enemies for brief windows"],
         process: "Switch came about because ultimately, not every hero is a character built for this life. They struggle with it so much that it hurts their finances, their job prospects, even their personal relationships. Switch wishes he wasn’t burdened with the responsibility of the crystal, but he accepts it anyway. He is the right man for the wrong job, and he doesn’t care. Switch is a symbol of change and intervention. We need to change the way we think about helping others, and go into action if we see someone who is struggling.",
@@ -779,6 +739,8 @@
         name: "Helix-3",
         role: "Armored Android, Powerhouse in all 10 of its servos",
         short: "Android Powerhouse with a flare for the self-aware, protects coastal city",
+        image: "PASTE_IMAGE_LINK_HERE",
+        imageAlt: "Portrait art of Helix-3",
         origin: "A company created a robot protector called Helix. It was built with 10 powerful servos that gave him incredible strength and speed. During a giant lighting storm, energy struck the lab and accidentally gave Helix-3 self awareness.The company became afraid of him and wanted to destroy him. But Helix-3 escaped and saw innocent people suffering in the city. Instead of becoming a weapon, he decided to protect the people and become a hero.",
         powers: ["Super Strength", "Enhanced Chasis Durability", "Capable of Flight, Speed, and Space Travel",],
         process: "I wondered “what if a robot became powerful enough to think for itself?’ The name “Helix” came from DNA and evolution, because the robot was evolving beyond normal programming. The “3” meant it was the third and strongest version ever created. I wanted Helix-3 to feel cool and powerful, but also emotional - like a machine trying to figure out who it really is, and it finds solidarity in its fellow heroes when it meets them. They prove to him that even an Android can cry.",
@@ -796,6 +758,8 @@
         name: "Psionic Surge",
         role: "Telepath Spy, Gray Femme Fatale",
         short: "A distrustful and untrustworthy confidant, but one always geared to doing what's right",
+        image: "PASTE_IMAGE_LINK_HERE",
+        imageAlt: "Portrait art of Psionic Surge",
         origin: "The head of an interpol-like spy organization, Director Gretchen Goode, nicknamed 'Psionic Surge' is closely monitoring the advent of costumed crusaders calling themselves 'Super-Heroes'. She was born with her powers, a rarity in this world.",
         powers: ["Telepathy and Mind Control", "Psychic Warfare", "Psychic Force Field Generation,"],
         process: "Psionic Surge is a reaction to how much I've seen seats of power fall into the same motions of ignoring and only taking note of something radical happening. Goode is someone that saw horrors like the Library Riots of '87, or the Satanic Panic that stretched as far into the late 90s, and could only blink as her superiors told her to take their side. She sees the super-heroes as a breath of fresh air—if extremely risky.",
@@ -813,6 +777,8 @@
         name: "Granite Jack",
         role: "Transparent-skinned Tank",
         short: "A bruiser hiding behind a skin of Crystal, everyone's best friend.",
+        image: "PASTE_IMAGE_LINK_HERE",
+        imageAlt: "Portrait art of Granite Jack",
         origin: "A whistleblower poisoned by a corporate transparency experiment, Jonathan Kirby was transformed into a mass of living mineral with super strength.",
         powers: ["Grows crystal armor", "Reflects energy through fractured surfaces", "Can carry over 100 tons on his one hand alone"],
         process: "Granite Jack starts from a contradiction: the huggable bruiser who looks monstrous, jokes through pain, and cares about everybody more than he admits. His body is the tragedy, but his personality is the reason that he holds together, especially on a team. Once he teams up with the other heroes, this guy is nigh unstoppable, more so than he would be alone.",
@@ -830,6 +796,8 @@
         name: "Shining Knight",
         role: "Ageless Warrior in Present Day",
         short: "An Arthurian Knight who can store and release energy in shockwaves.",
+        image: "PASTE_IMAGE_LINK_HERE",
+        imageAlt: "Portrait art of Shining Knight",
         origin: "Born from a mythic order who preserved ancient oaths after the gods went silent, the Shining Knight enters modern society with grace, confusion, and a radical belief that humanity can still be better than its history.",
         powers: ["Solar-charged super speed", "Heat-blasts from palms"],
         process: "When creating Shining Knight, I was calling on a lot of my fascination with mythology, but one retrofitted to modern styles. I thought it would be interesting if instead of being draped in old Greek fashion, her suit would be a healthy mix of modern military wear and medieval iconography.",
@@ -850,16 +818,16 @@
     const modalInner = document.getElementById("modalInner");
     const modalClose = document.getElementById("modalClose");
 
-    function figureMarkup(hero, includeNodes = false) {
+    function imageMarkup(hero, includeNodes = false) {
+      const hasImage = hero.image && hero.image.trim() && hero.image !== "PASTE_IMAGE_LINK_HERE";
+      const safeAlt = hero.imageAlt || `${hero.name} character portrait`;
+
       return `
-        <div class="figure" aria-hidden="true">
-          <div class="figure__head"></div>
-          <div class="figure__arm left"></div>
-          <div class="figure__arm right"></div>
-          <div class="figure__body"></div>
-          <div class="figure__leg left"></div>
-          <div class="figure__leg right"></div>
-        </div>
+        ${hasImage
+          ? `<img class="character-image" src="${hero.image}" alt="${safeAlt}" loading="lazy">`
+          : `<div class="image-empty-state">Image slot<code>Paste link into hero.image</code></div>`
+        }
+
         ${includeNodes ? hero.nodes.map(node => `
           <button class="costume-node" style="--x:${node.x}; --y:${node.y};" data-tooltip="${node.tip}" aria-label="Costume note: ${node.tip}"></button>
         `).join("") : ""}
@@ -870,8 +838,7 @@
       grid.innerHTML = heroes.map((hero, index) => `
         <article class="hero-card" style="--card-bg:${hero.cardBg}; --suit-light:${hero.suitLight}; --suit-dark:${hero.suitDark};">
           <div class="portrait-panel" tabindex="0" role="button" aria-label="Open details for ${hero.name}" data-index="${index}">
-            <div class="placeholder-label">Placeholder</div>
-            ${figureMarkup(hero, false)}
+            ${imageMarkup(hero, false)}
           </div>
           <div class="card-caption">
             <h3>${hero.name}</h3>
@@ -891,7 +858,7 @@
       modalInner.innerHTML = `
         <div class="modal-grid" style="--card-bg:${hero.cardBg}; --suit-light:${hero.suitLight}; --suit-dark:${hero.suitDark};">
           <div class="modal-portrait">
-            ${figureMarkup(hero, true)}
+            ${imageMarkup(hero, true)}
           </div>
           <div class="modal-copy">
             <div class="kicker">Character file</div>
@@ -922,7 +889,7 @@
             </div>
 
             <div class="modal-note">
-              Costume notes are attached to the cyan nodes on the image. Hover over, or keyboard-focus, each node to read the specific design explanation.
+              Costume notes are attached to the cyan nodes on the image. Hover over, or keyboard-focus, each node to read the specific design explanation. To change the art, paste a direct image URL into that character’s image field.
             </div>
           </div>
         </div>
